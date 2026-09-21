@@ -251,8 +251,8 @@ class TestBuildWheelAndSdist(unittest.TestCase):
     def test_wheel_name(self):
         wheels = [p for p in self.dist.iterdir() if p.name.endswith(".whl")]
         self.assertEqual(len(wheels), 1)
-        # PEP 427: sdlc_kit-<version>-py3-none-any.whl
-        self.assertRegex(wheels[0].name, r"^sdlc_kit-[\d.]+(?:rc\d+)?-py3-none-any\.whl$")
+        # PEP 427: local_sdlc_kit-<version>-py3-none-any.whl (setuptools canonicalises `-` to `_` in the filename).
+        self.assertRegex(wheels[0].name, r"^local_sdlc_kit-[\d.]+(?:rc\d+)?-py3-none-any\.whl$")
 
     def test_wheel_contains_template_and_runner(self):
         wheels = [p for p in self.dist.iterdir() if p.name.endswith(".whl")]
