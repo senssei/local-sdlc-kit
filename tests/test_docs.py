@@ -100,6 +100,23 @@ class TestDocsLinkedFromRepo(unittest.TestCase):
         self.assertNotIn("Trusted publishing setup", text)
         self.assertNotIn("[[check]]", text)  # the sdlc.toml reference lives in docs/gate.md
 
+    def test_readme_has_badges_before_the_first_section(self):
+        text = read(ROOT / "README.md")
+        head = text[: text.index("\n## ")]
+        for badge in ("actions/workflows/ci.yml/badge.svg", "actions/workflows/docs.yml/badge.svg",
+                      "img.shields.io/badge/license-Apache", "img.shields.io/badge/python-3.11"):
+            self.assertIn(badge, head, badge)
+
+    def test_readme_links_are_absolute_because_pypi_renders_it(self):
+        for target in re.findall(r"\]\(([^)\s]+)\)", read(ROOT / "README.md")):
+            self.assertRegex(target, r"^(https?://|#)", f"relative link {target} breaks on PyPI")
+
+    def test_readme_shows_the_pipeline_and_a_quick_start(self):
+        text = read(ROOT / "README.md")
+        self.assertIn("## Quick start", text)
+        self.assertIn("## Why", text)
+        self.assertIn("intent", text.split("## Quick start")[0].lower())
+
     def test_contributing_knows_about_the_docs_site(self):
         text = read(ROOT / "CONTRIBUTING.md")
         self.assertNotIn("does not publish a separate docs site", text)

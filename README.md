@@ -1,14 +1,50 @@
 # sdlc-kit
 
-A small, harness-neutral AI-native SDLC you can drop into any git project. Every non-trivial change goes through
-**intent -> spec -> plan -> test -> code -> review**, each stage ends in a committed file, and "done" is decided by a gate command,
-not by opinion. It works with Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and MiniMax Code because the process lives in
-`AGENTS.md` and plain `SKILL.md` files, and every other harness file only points there.
+**A small, harness-neutral AI-native SDLC you can drop into any git project.**
 
-Standard library only. POSIX only (Linux, macOS, WSL). The gate runner needs Python 3.11+; on an older `python3` it re-runs itself
-under a `python3.11` or newer found on `PATH`.
+[![CI](https://github.com/senssei/sdlc-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/senssei/sdlc-kit/actions/workflows/ci.yml)
+[![Docs](https://github.com/senssei/sdlc-kit/actions/workflows/docs.yml/badge.svg)](https://senssei.github.io/sdlc-kit/)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/senssei/sdlc-kit/blob/main/LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://senssei.github.io/sdlc-kit/install/)
+[![Platform: Linux, macOS, WSL](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20wsl-lightgrey.svg)](https://senssei.github.io/sdlc-kit/install/)
+[![Dependencies: none](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen.svg)](https://github.com/senssei/sdlc-kit/blob/main/pyproject.toml)
 
-## Install
+Every non-trivial change goes through six stages. Each stage ends in a committed file, and "done" is decided by a gate command,
+not by opinion.
+
+```text
+intent  ->  spec  ->  plan  ->  test  ->  code  ->  review
+   |          |         |        (red)                 |
+intent.md  spec.md  plan.md   seen failing        REVIEW.md      gate: python3 scripts/sdlc_check.py
+```
+
+Works with **Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and MiniMax Code**: the process lives in `AGENTS.md` and plain
+`SKILL.md` files, and every other harness file only points there.
+
+## Why
+
+- **State survives the chat.** Intent, spec and plan are files in git, so the work outlives `/clear`, context compaction and a
+  switch of agent.
+- **Tests come first, and it is proven.** `sdlc_check.py --red` exits 0 only when the new test fails now, for the right reason.
+- **Gates decide, not opinion.** A plan box is ticked only after the gate exited 0 in the same session; review is done by a fresh
+  agent that sees only the artifacts and the diff.
+- **Nothing to learn per tool.** One `AGENTS.md`, one skill directory, thin adapters. Standard library only, POSIX only.
+
+## Quick start
+
+```bash
+pip install sdlc-kit
+cd my-project
+sdlc-kit-install          # then start with /sdlc (Claude Code) or "use the sdlc skill" (others)
+```
+
+The installer never overwrites a file your project owns and never deletes anything. Not on PyPI yet? Use the git-clone form
+under [Install in detail](#install-in-detail). Full documentation:
+<https://senssei.github.io/sdlc-kit/>
+
+## Install in detail
+
+The gate runner needs Python 3.11+; on an older `python3` it re-runs itself under a `python3.11` or newer found on `PATH`.
 
 ```bash
 pip install sdlc-kit                     # or from a git clone: python3 ~/sdlc-kit/install.py
@@ -82,4 +118,8 @@ See `AGENTS.md`, `intent.md`, `spec.md` and `plan.md` in this repository: the ki
 ## Releasing
 
 Releases use PyPI trusted publishing (no tokens), TestPyPI first, then PyPI from a `v<__version__>` tag. The procedure is in
-[docs/releasing.md](docs/releasing.md) ([site](https://senssei.github.io/sdlc-kit/releasing/)).
+[Releasing](https://senssei.github.io/sdlc-kit/releasing/).
+
+## License
+
+[Apache-2.0](https://github.com/senssei/sdlc-kit/blob/main/LICENSE)
