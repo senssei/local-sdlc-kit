@@ -1,4 +1,4 @@
-# AGENTS.md (sdlc-kit itself)
+# AGENTS.md (local-sdlc-kit itself)
 
 This repository is the kit, not a project that uses it. To install the process into a project, see `README.md`.
 
@@ -6,7 +6,7 @@ This repository is the kit, not a project that uses it. To install the process i
 
 Reusable AI-native SDLC: `sdlc_kit/` is the installable package (`sdlc_kit/install.py` scaffolds, `sdlc_kit/sdlc_check.py` is
 the gate runner, `sdlc_kit/template/` is the rest). The top-level `install.py` is a shim that re-exports
-`sdlc_kit.install.main` for git clones; `pip install sdlc-kit` exposes the same installer as the `sdlc-kit-install` console
+`sdlc_kit.install.main` for git clones; `pip install local-sdlc-kit` exposes the same installer as the `local-sdlc-kit-install` console
 script. Python 3.11+, standard library only at runtime. Read `intent.md` (why), `spec.md` (invariants K1 to K5, installer,
 runner and packaging contracts) and `plan.md` (state) first.
 

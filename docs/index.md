@@ -1,4 +1,4 @@
-# sdlc-kit
+# local-sdlc-kit
 
 A small, harness-neutral AI-native SDLC you can drop into any git project. Every non-trivial change goes through
 **intent -> spec -> plan -> test -> code -> review**, each stage ends in a committed file, and "done" is decided by a gate command,

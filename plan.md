@@ -1,4 +1,4 @@
-# Plan: sdlc-kit
+# Plan: local-sdlc-kit
 
 An item is ticked only after `python3 sdlc_kit/sdlc_check.py` exited 0 for it. The runner re-runs itself under a newer Python
 when the current interpreter is older than 3.11.
@@ -24,8 +24,7 @@ Risks and open questions:
 
 - Enabling Pages (*Settings -> Pages -> Source: GitHub Actions*) and the `github-pages` environment is operator-only. The deploy job
   fails until it is done.
-- The `origin` remote is `senssei/sdlc_kit` but `pyproject.toml` and the README use `senssei/sdlc-kit`. The docs use the latter; if
-  the repository name is the former, the URLs (and the site URL `senssei.github.io/sdlc-kit/`) change.
+- The `origin` remote is `senssei/local-sdlc-kit`. The docs site is at `senssei.github.io/local-sdlc-kit/`.
 - MkDocs 2.0 is a rewrite that breaks plugin and theme compatibility: the `docs` extra pins `mkdocs>=1.6,<2`.
 
 ## Phase 4: CI
@@ -61,7 +60,7 @@ dependencies are exempt. The intent non-goal "A package on PyPI" is removed and 
 - [x] 2. Top-level `install.py` shim: `from sdlc_kit.install import main` and `sys.exit(main())`, so `python3 install.py` still
   works from a git clone. Test: `python3 install.py --help` exits 0 and prints the harness list.
 - [x] 3. Add `pyproject.toml` (setuptools backend, dynamic version from `sdlc_kit.__version__`, `dependencies = []`,
-  `[project.scripts] sdlc-kit-install = "sdlc_kit.install:main"`, `[project.optional-dependencies] dev = ["build", "twine"]`,
+  `[project.scripts] local-sdlc-kit-install = "sdlc_kit.install:main"`, `[project.optional-dependencies] dev = ["build", "twine"]`,
   `[project.urls]` with `Homepage`, `Issues`, `Changelog`, Apache-2.0 license expression). Test: `python3 -c "import tomllib;
   tomllib.loads(open('pyproject.toml').read())"` parses; `python3 -m build` produces `dist/*.whl` and `dist/*.tar.gz`.
 - [x] 4. Add `MANIFEST.in` (`include LICENSE README.md CHANGELOG.md`, `prune tests docs scripts .github`, plus the standard
@@ -73,12 +72,12 @@ dependencies are exempt. The intent non-goal "A package on PyPI" is removed and 
   `MANIFEST.in` include list matches.
 - [x] 6. Add `.github/workflows/publish.yml`: `workflow_dispatch` with `target: testpypi | pypi`, mirrors `prism-local` (build
   with `python -m build`, `twine check --strict`, upload via `pypa/gh-action-pypi-publish` with OIDC, smoke-test the wheel
-  on TestPyPI by installing it in a fresh venv and running `sdlc-kit-install --help`; PyPI gated on a tag `v<__version__>`).
+  on TestPyPI by installing it in a fresh venv and running `local-sdlc-kit-install --help`; PyPI gated on a tag `v<__version__>`).
   No API tokens in the repo. Test: a syntax check (`python3 -c "import yaml; yaml.safe_load(open('.github/workflows/publish.yml'))"`)
   and a grep that no `TWINE_TOKEN` / `PYPI_TOKEN` secret is referenced.
-- [x] 7. Update `README.md` and the kit's own `AGENTS.md`: add `pip install sdlc-kit` and `sdlc-kit-install` to the commands,
+- [x] 7. Update `README.md` and the kit's own `AGENTS.md`: add `pip install local-sdlc-kit` and `local-sdlc-kit-install` to the commands,
   and a "Releasing" section that mirrors `prism-local`'s procedure (TestPyPI first, then PyPI from a tag, with a reviewer on
-  the `pypi` environment). Test: a grep test that `README.md` mentions both `pip install sdlc-kit` and the `sdlc-kit-install`
+  the `pypi` environment). Test: a grep test that `README.md` mentions both `pip install local-sdlc-kit` and the `local-sdlc-kit-install`
   command.
 - [x] 8. Independent review of the change by a fresh subagent: the wheel builds, `twine check` is clean, the venv smoke test
   succeeds, K1 still forbids project names in `sdlc_kit/template/`, K4 still forbids runtime dependencies, and the in-repo
@@ -93,7 +92,7 @@ Risks and open questions:
   are not.
 - **A re-upload to PyPI is impossible.** Use a pre-release (`0.1.0rc1`) on TestPyPI if iteration is expected. The kit's
   `__version__` and the wheel name must agree.
-- **The shim `install.py` adds a name collision.** `pip install sdlc-kit` produces a wheel that does not contain a top-level
+- **The shim `install.py` adds a name collision.** `pip install local-sdlc-kit` produces a wheel that does not contain a top-level
   `install.py`; the shim only exists in the git checkout. AGENTS.md and README must keep both invocations working.
 
 ## Phase 2: Add mcode-tools as a supported harness

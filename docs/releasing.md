@@ -7,7 +7,7 @@ uses PyPI **trusted publishing** (OIDC), so no API tokens are stored anywhere. T
 ## One-time setup
 
 1. On [test.pypi.org](https://test.pypi.org/manage/account/publishing/) (and later [pypi.org](https://pypi.org/manage/account/publishing/)),
-   add a *pending publisher*: project `sdlc-kit`, owner `senssei`, repository `sdlc-kit`, workflow `publish.yml`,
+   add a *pending publisher*: project `local-sdlc-kit`, owner `senssei`, repository `local-sdlc-kit`, workflow `publish.yml`,
    environment `testpypi` (respectively `pypi`).
 2. In the GitHub repository, create the environments `testpypi` and `pypi` (*Settings -> Environments*). Add yourself as a
    required reviewer on `pypi` so a release needs an explicit approval.
@@ -20,7 +20,7 @@ uses PyPI **trusted publishing** (OIDC), so no API tokens are stored anywhere. T
    `sdlc_kit/__init__.py` (`__version__`), and merge to `main` with the gate green (`python3 sdlc_kit/sdlc_check.py`
    exits 0).
 2. Run **Publish -> target `testpypi`**. It runs the gate, builds the sdist and wheel, runs `twine check --strict`, uploads to
-   TestPyPI, then installs the uploaded version into a clean virtualenv and smoke-tests `sdlc-kit-install --help`.
+   TestPyPI, then installs the uploaded version into a clean virtualenv and smoke-tests `local-sdlc-kit-install --help`.
 3. Tag the release (`git tag -s vX.Y.Z && git push origin vX.Y.Z`) and run **Publish** on that tag with target `pypi`. The
    workflow refuses to publish to PyPI unless it runs from the tag `v<__version__>`.
 4. Create a GitHub release for the tag.

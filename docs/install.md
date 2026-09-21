@@ -1,21 +1,21 @@
 # Install
 
 ```bash
-pip install sdlc-kit                     # or from a git clone: python3 ~/sdlc-kit/install.py
+pip install local-sdlc-kit                     # or from a git clone: python3 ~/local-sdlc-kit/install.py
 cd my-project
-sdlc-kit-install                         # all harnesses; same flags as the git-clone shim
-sdlc-kit-install --harness claude,codex  # a subset
-sdlc-kit-install --dry-run               # see what it would do (it cannot predict OS errors)
+local-sdlc-kit-install                         # all harnesses; same flags as the git-clone shim
+local-sdlc-kit-install --harness claude,codex  # a subset
+local-sdlc-kit-install --dry-run               # see what it would do (it cannot predict OS errors)
 ```
 
 Git-clone form (works without a PyPI release):
 
 ```bash
-git clone <this repo> ~/sdlc-kit
+git clone <this repo> ~/local-sdlc-kit
 cd my-project
-python3 ~/sdlc-kit/install.py                       # the top-level shim re-exports sdlc_kit.install.main
-python3 ~/sdlc-kit/install.py --harness claude,codex
-python3 ~/sdlc-kit/install.py --dry-run
+python3 ~/local-sdlc-kit/install.py                       # the top-level shim re-exports sdlc_kit.install.main
+python3 ~/local-sdlc-kit/install.py --harness claude,codex
+python3 ~/local-sdlc-kit/install.py --dry-run
 ```
 
 The git-clone shim and the PyPI wheel expose the same installer with the same flags. Both produce the same files in the target

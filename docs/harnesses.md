@@ -21,4 +21,4 @@ a harness that does not auto-discover skills still finds the workflow.
   `.claude/skills` a real directory and re-run the installer: it then links each skill separately.
 - `sdlc-release` is user-invoked only in Claude Code (`disable-model-invocation`): run `/sdlc-release` yourself.
 - A project that git-ignores `.cursor/` will not commit the Cursor rule.
-- Choose harnesses at install time with `--harness`, for example `sdlc-kit-install --harness claude,codex`.
+- Choose harnesses at install time with `--harness`, for example `local-sdlc-kit-install --harness claude,codex`.

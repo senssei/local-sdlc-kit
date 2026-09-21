@@ -1,4 +1,4 @@
-# Specification: sdlc-kit
+# Specification: local-sdlc-kit
 
 ## 1. Components
 
@@ -78,10 +78,10 @@ under `[Unreleased]` until released), `CONTRIBUTING.md`, `SECURITY.md`.
 
 - `[project] dependencies = []`. The kit installs nothing extra at runtime. Optional extras (`dev` for tests) cover maintainer
   workflows and are not installed by users.
-- `[project.scripts] sdlc-kit-install = "sdlc_kit.install:main"` exposes the installer as a console script so `pip install sdlc-kit`
-  gives users `sdlc-kit-install --help` without cloning the repo.
+- `[project.scripts] local-sdlc-kit-install = "sdlc_kit.install:main"` exposes the installer as a console script so `pip install local-sdlc-kit`
+  gives users `local-sdlc-kit-install --help` without cloning the repo.
 - `python -m build` must produce a wheel and an sdist; `twine check --strict dist/*` must exit 0. A fresh virtualenv must be able to
-  `pip install dist/*.whl` and run `sdlc-kit-install --help`, producing the same harness list as `python3 install.py --help` from a
+  `pip install dist/*.whl` and run `local-sdlc-kit-install --help`, producing the same harness list as `python3 install.py --help` from a
   git clone.
 - `[project.urls]` points at the GitHub repository (`Homepage`, `Issues`, `Changelog`, `Documentation` when a docs site exists).
 - GitHub Actions trusted publishing (OIDC) is the supported release path; no PyPI token is committed. The manual workflow

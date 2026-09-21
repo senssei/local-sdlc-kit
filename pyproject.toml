@@ -3,13 +3,13 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sdlc-kit"
+name = "local-sdlc-kit"
 description = "A small, harness-neutral AI-native SDLC (intent, spec, plan, test, code, review) you can drop into any git project"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-authors = [{ name = "sdlc-kit maintainers" }]
+authors = [{ name = "local-sdlc-kit maintainers" }]
 keywords = [
     "sdlc",
     "ai-coding",
@@ -44,13 +44,13 @@ dev = ["build>=1.0", "twine>=5.0"]
 docs = ["mkdocs>=1.6,<2"]
 
 [project.urls]
-Homepage = "https://github.com/senssei/sdlc-kit"
-Issues = "https://github.com/senssei/sdlc-kit/issues"
-Changelog = "https://github.com/senssei/sdlc-kit/blob/main/CHANGELOG.md"
-Documentation = "https://senssei.github.io/sdlc-kit/"
+Homepage = "https://github.com/senssei/local-sdlc-kit"
+Issues = "https://github.com/senssei/local-sdlc-kit/issues"
+Changelog = "https://github.com/senssei/local-sdlc-kit/blob/main/CHANGELOG.md"
+Documentation = "https://senssei.github.io/local-sdlc-kit/"
 
 [project.scripts]
-sdlc-kit-install = "sdlc_kit.install:main"
+local-sdlc-kit-install = "sdlc_kit.install:main"
 
 [tool.setuptools]
 packages = ["sdlc_kit"]

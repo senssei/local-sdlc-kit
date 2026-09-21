@@ -1,7 +1,7 @@
-site_name: sdlc-kit
+site_name: local-sdlc-kit
 site_description: A small, harness-neutral AI-native SDLC you can drop into any git project
-site_url: https://senssei.github.io/sdlc-kit/
-repo_url: https://github.com/senssei/sdlc-kit
+site_url: https://senssei.github.io/local-sdlc-kit/
+repo_url: https://github.com/senssei/local-sdlc-kit
 edit_uri: edit/main/docs/
 strict: true
 

@@ -1,12 +1,12 @@
 # Contributing
 
-Thanks for helping out. sdlc-kit is a small alpha project: issues and pull requests are welcome.
+Thanks for helping out. local-sdlc-kit is a small alpha project: issues and pull requests are welcome.
 
 ## Setup
 
 ```bash
-git clone https://github.com/senssei/sdlc-kit
-cd sdlc-kit
+git clone https://github.com/senssei/local-sdlc-kit
+cd local-sdlc-kit
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"               # adds `build` and `twine` for the maintainer workflow
 ```
@@ -20,7 +20,7 @@ python3 -m unittest discover -s tests -v    # ~150 tests, ~7 s, no network or GP
 ```
 
 `tests/test_packaging.py` builds a wheel + sdist into a temp directory, runs `twine check --strict`, and installs the
-wheel into a fresh `venv` to smoke-test `sdlc-kit-install --help`. It needs `build` and `twine` (the `[dev]` extra).
+wheel into a fresh `venv` to smoke-test `local-sdlc-kit-install --help`. It needs `build` and `twine` (the `[dev]` extra).
 `tests/test_install.py`, `tests/test_kit.py` and `tests/test_sdlc_check.py` need nothing but the standard library.
 
 ## The gate

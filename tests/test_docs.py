@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.dont_write_bytecode = True
 DOCS = ROOT / "docs"
 MKDOCS = ROOT / "mkdocs.yml"
-SITE_URL = "https://senssei.github.io/sdlc-kit/"
+SITE_URL = "https://senssei.github.io/local-sdlc-kit/"
 
 
 def read(path):
@@ -95,8 +95,8 @@ class TestDocsLinkedFromRepo(unittest.TestCase):
     def test_readme_links_to_the_site_and_does_not_repeat_the_reference(self):
         text = read(ROOT / "README.md")
         self.assertIn(SITE_URL, text)
-        self.assertIn("pip install sdlc-kit", text)
-        self.assertIn("sdlc-kit-install", text)
+        self.assertIn("pip install local-sdlc-kit", text)
+        self.assertIn("local-sdlc-kit-install", text)
         self.assertNotIn("Trusted publishing setup", text)
         self.assertNotIn("[[check]]", text)  # the sdlc.toml reference lives in docs/gate.md
 

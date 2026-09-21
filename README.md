@@ -1,13 +1,13 @@
-# sdlc-kit
+# local-sdlc-kit
 
 **A small, harness-neutral AI-native SDLC you can drop into any git project.**
 
-[![CI](https://github.com/senssei/sdlc-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/senssei/sdlc-kit/actions/workflows/ci.yml)
-[![Docs](https://github.com/senssei/sdlc-kit/actions/workflows/docs.yml/badge.svg)](https://senssei.github.io/sdlc-kit/)
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/senssei/sdlc-kit/blob/main/LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://senssei.github.io/sdlc-kit/install/)
-[![Platform: Linux, macOS, WSL](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20wsl-lightgrey.svg)](https://senssei.github.io/sdlc-kit/install/)
-[![Dependencies: none](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen.svg)](https://github.com/senssei/sdlc-kit/blob/main/pyproject.toml)
+[![CI](https://github.com/senssei/local-sdlc-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/senssei/local-sdlc-kit/actions/workflows/ci.yml)
+[![Docs](https://github.com/senssei/local-sdlc-kit/actions/workflows/docs.yml/badge.svg)](https://senssei.github.io/local-sdlc-kit/)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/senssei/local-sdlc-kit/blob/main/LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://senssei.github.io/local-sdlc-kit/install/)
+[![Platform: Linux, macOS, WSL](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20wsl-lightgrey.svg)](https://senssei.github.io/local-sdlc-kit/install/)
+[![Dependencies: none](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen.svg)](https://github.com/senssei/local-sdlc-kit/blob/main/pyproject.toml)
 
 Every non-trivial change goes through six stages. Each stage ends in a committed file, and "done" is decided by a gate command,
 not by opinion.
@@ -33,35 +33,35 @@ Works with **Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and MiniMax 
 ## Quick start
 
 ```bash
-pip install sdlc-kit
+pip install local-sdlc-kit
 cd my-project
-sdlc-kit-install          # then start with /sdlc (Claude Code) or "use the sdlc skill" (others)
+local-sdlc-kit-install          # then start with /sdlc (Claude Code) or "use the sdlc skill" (others)
 ```
 
 The installer never overwrites a file your project owns and never deletes anything. Not on PyPI yet? Use the git-clone form
 under [Install in detail](#install-in-detail). Full documentation:
-<https://senssei.github.io/sdlc-kit/>
+<https://senssei.github.io/local-sdlc-kit/>
 
 ## Install in detail
 
 The gate runner needs Python 3.11+; on an older `python3` it re-runs itself under a `python3.11` or newer found on `PATH`.
 
 ```bash
-pip install sdlc-kit                     # or from a git clone: python3 ~/sdlc-kit/install.py
+pip install local-sdlc-kit                     # or from a git clone: python3 ~/local-sdlc-kit/install.py
 cd my-project
-sdlc-kit-install                         # all harnesses; same flags as the git-clone shim
-sdlc-kit-install --harness claude,codex  # a subset
-sdlc-kit-install --dry-run               # see what it would do (it cannot predict OS errors)
+local-sdlc-kit-install                         # all harnesses; same flags as the git-clone shim
+local-sdlc-kit-install --harness claude,codex  # a subset
+local-sdlc-kit-install --dry-run               # see what it would do (it cannot predict OS errors)
 ```
 
 Git-clone form (works without a PyPI release):
 
 ```bash
-git clone <this repo> ~/sdlc-kit
+git clone <this repo> ~/local-sdlc-kit
 cd my-project
-python3 ~/sdlc-kit/install.py                       # the top-level shim re-exports sdlc_kit.install.main
-python3 ~/sdlc-kit/install.py --harness claude,codex
-python3 ~/sdlc-kit/install.py --dry-run
+python3 ~/local-sdlc-kit/install.py                       # the top-level shim re-exports sdlc_kit.install.main
+python3 ~/local-sdlc-kit/install.py --harness claude,codex
+python3 ~/local-sdlc-kit/install.py --dry-run
 ```
 
 The git-clone shim and the PyPI wheel expose the same installer with the same flags. Both produce the same files in the target
@@ -97,12 +97,12 @@ ends with a `manual step needed` list: merge the process section into your `AGEN
 
 ## Documentation
 
-Full documentation: <https://senssei.github.io/sdlc-kit/>
+Full documentation: <https://senssei.github.io/local-sdlc-kit/>
 
-- [Process](https://senssei.github.io/sdlc-kit/process/): the six stages and the five skills.
-- [Harnesses](https://senssei.github.io/sdlc-kit/harnesses/): how Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and
+- [Process](https://senssei.github.io/local-sdlc-kit/process/): the six stages and the five skills.
+- [Harnesses](https://senssei.github.io/local-sdlc-kit/harnesses/): how Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and
   MiniMax Code pick the process up.
-- [The gate](https://senssei.github.io/sdlc-kit/gate/): `sdlc.toml`, `sdlc_check.py` and the red-first `--red` proof.
+- [The gate](https://senssei.github.io/local-sdlc-kit/gate/): `sdlc.toml`, `sdlc_check.py` and the red-first `--red` proof.
 
 ## Develop the kit
 
@@ -118,8 +118,8 @@ See `AGENTS.md`, `intent.md`, `spec.md` and `plan.md` in this repository: the ki
 ## Releasing
 
 Releases use PyPI trusted publishing (no tokens), TestPyPI first, then PyPI from a `v<__version__>` tag. The procedure is in
-[Releasing](https://senssei.github.io/sdlc-kit/releasing/).
+[Releasing](https://senssei.github.io/local-sdlc-kit/releasing/).
 
 ## License
 
-[Apache-2.0](https://github.com/senssei/sdlc-kit/blob/main/LICENSE)
+[Apache-2.0](https://github.com/senssei/local-sdlc-kit/blob/main/LICENSE)

@@ -30,7 +30,7 @@ jobs:
         run: |
           VERSION=$(python -c 'import re; print(re.search(r"__version__ = \"(.+?)\"", open("sdlc_kit/__init__.py").read()).group(1))')
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Building sdlc-kit $VERSION"
+          echo "Building local-sdlc-kit $VERSION"
       - name: Require the matching release tag for PyPI
         if: inputs.target == 'pypi'
         env:
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/sdlc-kit
+      url: https://test.pypi.org/p/local-sdlc-kit
     permissions:
       id-token: write
     steps:
@@ -84,11 +84,11 @@ jobs:
           python -m venv "$RUNNER_TEMP/venv"
           for attempt in 1 2 3 4 5 6 7 8; do   # the index can take a little while to serve a new upload
             if "$RUNNER_TEMP/venv/bin/pip" install --index-url https://test.pypi.org/simple/ \
-                 --extra-index-url https://pypi.org/simple/ "sdlc-kit==$VERSION"; then break; fi
+                 --extra-index-url https://pypi.org/simple/ "local-sdlc-kit==$VERSION"; then break; fi
             echo "not visible yet (attempt $attempt); waiting"; sleep 20
           done
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/venv/bin/sdlc-kit-install" --help
+          "$RUNNER_TEMP/venv/bin/local-sdlc-kit-install" --help
           "$RUNNER_TEMP/venv/bin/python" -c "import sdlc_kit; assert sdlc_kit.__version__ == '$VERSION', sdlc_kit.__version__"
 
   pypi:
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/sdlc-kit
+      url: https://pypi.org/p/local-sdlc-kit
     permissions:
       id-token: write
     steps:

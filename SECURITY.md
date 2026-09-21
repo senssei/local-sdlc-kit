@@ -3,13 +3,13 @@
 ## Reporting a vulnerability
 
 Please report security issues privately through GitHub's
-[private vulnerability reporting](https://github.com/senssei/sdlc-kit/security/advisories/new) rather than a public
-issue. Include the version, how you run `sdlc-kit-install` (target directory, flags), and steps to reproduce. This is
+[private vulnerability reporting](https://github.com/senssei/local-sdlc-kit/security/advisories/new) rather than a public
+issue. Include the version, how you run `local-sdlc-kit-install` (target directory, flags), and steps to reproduce. This is
 a small alpha project, so expect a best-effort response, but reports are taken seriously.
 
 ## Threat model
 
-`sdlc-kit` is a **file scaffolder** for a development process.
+`local-sdlc-kit` is a **file scaffolder** for a development process.
 
 - The installer copies template files into a target directory and never overwrites files the project already owns
   (K3 in `spec.md`). It does not read, transmit or transform user code.

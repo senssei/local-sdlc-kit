@@ -1,4 +1,4 @@
-# Intent: sdlc-kit
+# Intent: local-sdlc-kit
 
 > **Status: approved by the operator, 2026-09-21.** The operator approves any change to this file.
 
@@ -13,7 +13,7 @@ so it cannot be reused.
 
 One small repository. Running `install.py` in any git project adds the process (skills, artifact templates, `AGENTS.md`), a
 config-driven gate runner, and thin adapters for the chosen harnesses. The project only fills in its own commands and rules. The
-same kit is also installable from PyPI as `sdlc-kit`; both surfaces expose the same files and the same `sdlc-kit-install` command.
+same kit is also installable from PyPI as `local-sdlc-kit`; both surfaces expose the same files and the same `local-sdlc-kit-install` command.
 
 ## 3. Constraints
 
@@ -38,5 +38,5 @@ same kit is also installable from PyPI as `sdlc-kit`; both surfaces expose the s
 | The kit names no project, language or test tool in installed content | K1 grep test |
 | Existing project files are never overwritten | K3 test |
 | The gate works for a non-Python project | `tests/test_sdlc_check.py` with a shell-command fixture |
-| `pip install sdlc-kit` lands an installable distribution with the same files as a git clone | `tests/test_packaging.py`: sdist + wheel build, `twine check --strict`, venv smoke test |
-| The PyPI-published version matches the in-repo behaviour | The wheel installs and `sdlc-kit-install --help` lists the same harnesses as `python3 install.py --help` |
+| `pip install local-sdlc-kit` lands an installable distribution with the same files as a git clone | `tests/test_packaging.py`: sdist + wheel build, `twine check --strict`, venv smoke test |
+| The PyPI-published version matches the in-repo behaviour | The wheel installs and `local-sdlc-kit-install --help` lists the same harnesses as `python3 install.py --help` |

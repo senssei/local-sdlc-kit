@@ -74,7 +74,7 @@ class TestPyproject(unittest.TestCase):
         self.assertEqual(self.data["build-system"]["build-backend"], "setuptools.build_meta")
 
     def test_project_name(self):
-        self.assertEqual(self.data["project"]["name"], "sdlc-kit")
+        self.assertEqual(self.data["project"]["name"], "local-sdlc-kit")
 
     def test_dynamic_version(self):
         self.assertIn("version", self.data["project"].get("dynamic", []))
@@ -87,8 +87,8 @@ class TestPyproject(unittest.TestCase):
 
     def test_entry_point_exposes_installer(self):
         scripts = self.data["project"].get("scripts", {})
-        self.assertIn("sdlc-kit-install", scripts)
-        self.assertEqual(scripts["sdlc-kit-install"], "sdlc_kit.install:main")
+        self.assertIn("local-sdlc-kit-install", scripts)
+        self.assertEqual(scripts["local-sdlc-kit-install"], "sdlc_kit.install:main")
 
     def test_urls_include_github_repo(self):
         urls = self.data["project"].get("urls", {})
@@ -282,7 +282,7 @@ class TestBuildWheelAndSdist(unittest.TestCase):
         wheels = [p for p in self.dist.iterdir() if p.name.endswith(".whl")]
         with zipfile.ZipFile(wheels[0]) as z:
             entry = z.read([n for n in z.namelist() if n.endswith("entry_points.txt")][0]).decode("utf-8")
-        self.assertIn("sdlc-kit-install", entry)
+        self.assertIn("local-sdlc-kit-install", entry)
         self.assertIn("sdlc_kit.install:main", entry)
 
     def test_twine_check_strict_passes(self):
@@ -300,12 +300,12 @@ class TestBuildWheelAndSdist(unittest.TestCase):
             cmd = [sys.executable, "-m", "venv", venv_dir]
             subprocess.run(cmd, check=True, capture_output=True)
             pip = Path(venv_dir) / "bin" / "pip"
-            cli = Path(venv_dir) / "bin" / "sdlc-kit-install"
+            cli = Path(venv_dir) / "bin" / "local-sdlc-kit-install"
             # Install the wheel + nothing else (no internet); if the install pulls deps, fail.
             proc = subprocess.run([str(pip), "install", "--no-index", "--no-deps", str(wheels[0])],
                                   capture_output=True, text=True)
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
-            self.assertTrue(cli.is_file(), "sdlc-kit-install console script must exist")
+            self.assertTrue(cli.is_file(), "local-sdlc-kit-install console script must exist")
             help_proc = subprocess.run([str(cli), "--help"], capture_output=True, text=True)
             self.assertEqual(help_proc.returncode, 0, help_proc.stdout + help_proc.stderr)
             # The CLI must list the same harness set as the in-repo installer.
