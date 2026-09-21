@@ -5,7 +5,7 @@ when the current interpreter is older than 3.11.
 
 ## Phase 5: Docs site (MkDocs)
 
-Status: approved by the operator, in progress.
+Status: built; CI green, Pages enabled by the operator. README got badges, a Why and a Quick start section (PyPI badge to add after the first release).
 
 Static MkDocs site (built-in `readthedocs` theme: no third-party theme dependency) on GitHub Pages. Spec section 5, "Docs".
 The intent non-goal on hosting is clarified: a static docs site is in scope.
@@ -18,7 +18,7 @@ The intent non-goal on hosting is clarified: a static docs site is in scope.
 - [x] 2. Add `mkdocs.yml`, `docs/` (index, install, process, harnesses, gate, releasing), the `docs` extra in `pyproject.toml`, `.gitignore`
   (`site/`). Move the harness, gate and releasing detail out of `README.md` into `docs/` and leave short pointers.
 - [x] 3. Add the `docs` job to `ci.yml` and `.github/workflows/docs.yml` (deploy). Update `CONTRIBUTING.md` and `CHANGELOG.md`.
-- [ ] 4. Gate green, and `mkdocs build --strict` run for real in a throwaway venv.
+- [x] 4. Gate green, and `mkdocs build --strict` run for real in a throwaway venv.
 
 Risks and open questions:
 
@@ -30,7 +30,7 @@ Risks and open questions:
 
 ## Phase 4: CI
 
-Status: approved by the operator, in progress.
+Status: built; first CI run on `main` green (2026-09-21).
 
 Add a CI workflow and make the release workflow run the gate (spec section 5, "CI"). Bump the artifact actions to current majors.
 
