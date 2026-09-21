@@ -53,8 +53,15 @@ The artifacts are committed files; the state survives `/clear`, a context compac
 - **The installer never overwrites a project-owned file and never deletes.** K3.
 - **One logical change per commit**, message `type: description` (`feat:`, `bugfix:`, `docs:`, `chore:`, `packaging:`).
 
+## Docs
+
+The documentation site is MkDocs: `docs/` (Markdown) and `mkdocs.yml`. Preview it with `pip install -e ".[docs]" && mkdocs serve`;
+`mkdocs build --strict` must pass (CI runs it). It is deployed to GitHub Pages from `main` by `.github/workflows/docs.yml`.
+`README.md` is the PyPI landing page: keep it short and put reference material in `docs/`. The process rules stay in
+`sdlc_kit/template/AGENTS.md`; `docs/process.md` only points to it.
+
 ## Pull requests
 
-Describe what changed and why, and note how you tested it. CI must pass (the gate on Python 3.11–3.12, the wheel
-smoke test). For a release, see `README.md` (the "Releasing" section). The release procedure is mirrored in
-`.github/workflows/publish.yml`; the kit does not publish a separate docs site.
+Describe what changed and why, and note how you tested it. CI must pass (the gate on Python 3.11 to 3.13, the wheel build, the
+strict docs build). For a release, see [`docs/releasing.md`](docs/releasing.md). It is implemented by
+`.github/workflows/publish.yml`.

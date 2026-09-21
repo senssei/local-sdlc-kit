@@ -20,6 +20,12 @@ versions may include breaking changes).
 - **GitHub Actions trusted publishing** (`.github/workflows/publish.yml`): `workflow_dispatch` with `target: testpypi |
   pypi`, no API tokens in the repo. PyPI is gated on the workflow running from a tag `v<__version__>`, mirroring the
   `prism-local` release process.
+- **CI** (`.github/workflows/ci.yml`): the kit's gate on Python 3.11 to 3.13 and a sdist/wheel build with `twine check --strict`
+  on every push to `main` and every pull request. `publish.yml` now runs the gate before building.
+- **Documentation site** (MkDocs, `docs/` + `mkdocs.yml`): install, process, harnesses, the gate and releasing. Built with
+  `mkdocs build --strict` in CI and deployed to GitHub Pages from `main` (`.github/workflows/docs.yml`). The harness, gate and
+  releasing detail moved out of `README.md` into `docs/`; the README keeps install and links. New `docs` extra
+  (`pip install sdlc-kit[docs]` is for maintainers; not a runtime dependency).
 - **Apache-2.0** license, **Keep a Changelog** + SemVer conventions.
 
 ## [0.1.0] - 2026-09-21

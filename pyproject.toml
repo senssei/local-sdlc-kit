@@ -42,11 +42,13 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["build>=1.0", "twine>=5.0"]
+docs = ["mkdocs>=1.6,<2"]
 
 [project.urls]
 Homepage = "https://github.com/senssei/sdlc-kit"
 Issues = "https://github.com/senssei/sdlc-kit/issues"
 Changelog = "https://github.com/senssei/sdlc-kit/blob/main/CHANGELOG.md"
+Documentation = "https://senssei.github.io/sdlc-kit/"
 
 [project.scripts]
 sdlc-kit-install = "sdlc_kit.install:main"

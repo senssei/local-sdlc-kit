@@ -1,14 +1,4 @@
-# sdlc-kit
-
-A small, harness-neutral AI-native SDLC you can drop into any git project. Every non-trivial change goes through
-**intent -> spec -> plan -> test -> code -> review**, each stage ends in a committed file, and "done" is decided by a gate command,
-not by opinion. It works with Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and MiniMax Code because the process lives in
-`AGENTS.md` and plain `SKILL.md` files, and every other harness file only points there.
-
-Standard library only. POSIX only (Linux, macOS, WSL). The gate runner needs Python 3.11+; on an older `python3` it re-runs itself
-under a `python3.11` or newer found on `PATH`.
-
-## Install
+# Install
 
 ```bash
 pip install sdlc-kit                     # or from a git clone: python3 ~/sdlc-kit/install.py
@@ -31,10 +21,13 @@ python3 ~/sdlc-kit/install.py --dry-run
 The git-clone shim and the PyPI wheel expose the same installer with the same flags. Both produce the same files in the target
 project.
 
-Then fill in three things, by hand or by asking an agent to do it:
+## After installing
+
+Fill in three things, by hand or by asking an agent to do it:
 
 1. `AGENTS.md`: the `<!-- TODO -->` parts (project, commands, project rules).
-2. `sdlc.toml`: the test command, the one-test command for `--red`, optional extra checks and the changelog rule.
+2. `sdlc.toml`: the test command, the one-test command for `--red`, optional extra checks and the changelog rule. See
+   [The gate](gate.md).
 3. `intent.md` and `spec.md`: the problem, constraints, non-goals, invariants. The operator approves `intent.md`.
 
 Optional: `git config core.hooksPath .githooks` runs the gate before every commit.
@@ -58,28 +51,3 @@ prints a diff against the current template. The installer never deletes anything
 
 If your project already has an `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` or Copilot instructions, they are left alone and the installer
 ends with a `manual step needed` list: merge the process section into your `AGENTS.md`, and make the adapters point to it.
-
-## Documentation
-
-Full documentation: <https://senssei.github.io/sdlc-kit/>
-
-- [Process](https://senssei.github.io/sdlc-kit/process/): the six stages and the five skills.
-- [Harnesses](https://senssei.github.io/sdlc-kit/harnesses/): how Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor and
-  MiniMax Code pick the process up.
-- [The gate](https://senssei.github.io/sdlc-kit/gate/): `sdlc.toml`, `sdlc_check.py` and the red-first `--red` proof.
-
-## Develop the kit
-
-```bash
-python3 sdlc_kit/sdlc_check.py      # compile + tests
-python3 -m build                    # sdist + wheel into dist/
-python3 -m twine check --strict dist/*
-pip install -e ".[docs]" && mkdocs serve   # preview the documentation site
-```
-
-See `AGENTS.md`, `intent.md`, `spec.md` and `plan.md` in this repository: the kit follows its own process.
-
-## Releasing
-
-Releases use PyPI trusted publishing (no tokens), TestPyPI first, then PyPI from a `v<__version__>` tag. The procedure is in
-[docs/releasing.md](docs/releasing.md) ([site](https://senssei.github.io/sdlc-kit/releasing/)).

@@ -87,3 +87,14 @@ under `[Unreleased]` until released), `CONTRIBUTING.md`, `SECURITY.md`.
 - GitHub Actions trusted publishing (OIDC) is the supported release path; no PyPI token is committed. The manual workflow
   `.github/workflows/publish.yml` is `workflow_dispatch` with `target: testpypi | pypi`; PyPI is gated on the workflow running
   from a tag `v<__version__>`, mirroring `prism-local`'s release process.
+- CI: `.github/workflows/ci.yml` runs on `push` to `main` and on `pull_request`. It runs the kit's own gate
+  (`python3 sdlc_kit/sdlc_check.py`) on a Python matrix that covers every supported minor (3.11, 3.12, 3.13), and a build job
+  (`python -m build`, `twine check --strict dist/*`). `publish.yml` runs the same gate in its `build` job, so nothing is published
+  from a red tree. Workflows hold `contents: read` unless a job needs more, and reference no PyPI token.
+- Docs: `docs/` (Markdown) and `mkdocs.yml` build a static site with MkDocs (`mkdocs build --strict` must exit 0; every file in
+  `nav` exists; relative links between pages resolve). `docs/` holds the detailed reference (install, harnesses, the gate, the
+  process, releasing); `README.md` stays a self-contained PyPI landing page that links to it, and does not repeat the reference.
+  `mkdocs` is a build-time dependency in the `docs` extra (K4: not runtime, not in `dependencies`). `docs/` is not shipped
+  (`MANIFEST.in` prunes it). CI builds the site with `--strict` on every change; `.github/workflows/docs.yml` deploys it to
+  GitHub Pages from `main` only, with `pages: write` and `id-token: write` scoped to the deploy job and no token stored.
+  The process docs point to `sdlc_kit/template/AGENTS.md` and do not restate its rules (K2).

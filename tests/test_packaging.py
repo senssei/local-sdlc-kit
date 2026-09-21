@@ -95,8 +95,11 @@ class TestPyproject(unittest.TestCase):
         self.assertIn("Homepage", urls)
         self.assertIn("Issues", urls)
         self.assertIn("Changelog", urls)
-        for url in urls.values():
-            self.assertIn("github.com", url.lower(), url)
+        for name, url in urls.items():
+            if name == "Documentation":  # the MkDocs site on GitHub Pages
+                self.assertIn("github.io", url.lower(), url)
+            else:
+                self.assertIn("github.com", url.lower(), url)
 
     def test_license_is_apache(self):
         self.assertIn("Apache", str(self.data["project"].get("license", "")))
@@ -346,6 +349,51 @@ class TestPublishWorkflow(unittest.TestCase):
         self.assertIn("GITHUB_REF_TYPE", text)
         self.assertIn("GITHUB_REF_NAME", text)
         self.assertIn('v$VERSION', text)
+
+
+class TestCiWorkflow(unittest.TestCase):
+    """Phase 4: ci.yml runs the gate on a Python matrix and a build; publish.yml runs the gate before building."""
+
+    CI = ROOT / ".github" / "workflows" / "ci.yml"
+    PUBLISH = ROOT / ".github" / "workflows" / "publish.yml"
+
+    def _ci(self):
+        self.assertTrue(self.CI.is_file(), "ci.yml missing")
+        return self.CI.read_text(encoding="utf-8")
+
+    def test_ci_triggers_on_push_and_pull_request(self):
+        text = self._ci()
+        self.assertRegex(text, r"(?m)^  push:")
+        self.assertRegex(text, r"(?m)^  pull_request:")
+
+    def test_ci_runs_the_gate_on_every_supported_python(self):
+        text = self._ci()
+        self.assertIn("sdlc_kit/sdlc_check.py", text)
+        for minor in ("3.11", "3.12", "3.13"):
+            self.assertIn(f'"{minor}"', text, minor)
+
+    def test_ci_builds_and_checks_the_distribution(self):
+        text = self._ci()
+        self.assertIn("python -m build", text)
+        self.assertIn("twine check --strict", text)
+
+    def test_ci_is_read_only_and_holds_no_token(self):
+        text = self._ci()
+        self.assertIn("contents: read", text)
+        self.assertNotIn("id-token", text)
+        for needle in ("TWINE_TOKEN", "PYPI_TOKEN", "pypi-token", "twine-token"):
+            self.assertNotIn(needle, text, needle)
+
+    def test_publish_runs_the_gate_before_building(self):
+        text = self.PUBLISH.read_text(encoding="utf-8")
+        self.assertIn("sdlc_kit/sdlc_check.py", text)
+        self.assertLess(text.index("sdlc_kit/sdlc_check.py"), text.index("python -m build"))
+
+    def test_workflows_use_no_outdated_artifact_actions(self):
+        for path in (self.CI, self.PUBLISH):
+            if path.is_file():
+                text = path.read_text(encoding="utf-8")
+                self.assertNotRegex(text, r"actions/(up|down)load-artifact@v4", path.name)
 
 
 if __name__ == "__main__":

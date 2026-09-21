@@ -3,9 +3,51 @@
 An item is ticked only after `python3 sdlc_kit/sdlc_check.py` exited 0 for it. The runner re-runs itself under a newer Python
 when the current interpreter is older than 3.11.
 
+## Phase 5: Docs site (MkDocs)
+
+Status: approved by the operator, in progress.
+
+Static MkDocs site (built-in `readthedocs` theme: no third-party theme dependency) on GitHub Pages. Spec section 5, "Docs".
+The intent non-goal on hosting is clarified: a static docs site is in scope.
+
+- [x] 1. Tests (red first) in `tests/test_docs.py`: `mkdocs.yml` has `site_name`, `strict: true` and a `nav` whose files exist; the
+  `docs` extra has `mkdocs` and `dependencies` stays empty; `MANIFEST.in` still prunes `docs`; relative links in `docs/*.md`
+  resolve; `ci.yml` builds the docs with `--strict`; `docs.yml` deploys from `main` with scoped Pages permissions and no token;
+  README links to the site and `CONTRIBUTING.md` no longer claims there is no docs site; `mkdocs build --strict` passes when
+  `mkdocs` is installed (skipped otherwise).
+- [x] 2. Add `mkdocs.yml`, `docs/` (index, install, process, harnesses, gate, releasing), the `docs` extra in `pyproject.toml`, `.gitignore`
+  (`site/`). Move the harness, gate and releasing detail out of `README.md` into `docs/` and leave short pointers.
+- [x] 3. Add the `docs` job to `ci.yml` and `.github/workflows/docs.yml` (deploy). Update `CONTRIBUTING.md` and `CHANGELOG.md`.
+- [ ] 4. Gate green, and `mkdocs build --strict` run for real in a throwaway venv.
+
+Risks and open questions:
+
+- Enabling Pages (*Settings -> Pages -> Source: GitHub Actions*) and the `github-pages` environment is operator-only. The deploy job
+  fails until it is done.
+- The `origin` remote is `senssei/sdlc_kit` but `pyproject.toml` and the README use `senssei/sdlc-kit`. The docs use the latter; if
+  the repository name is the former, the URLs (and the site URL `senssei.github.io/sdlc-kit/`) change.
+- MkDocs 2.0 is a rewrite that breaks plugin and theme compatibility: the `docs` extra pins `mkdocs>=1.6,<2`.
+
+## Phase 4: CI
+
+Status: approved by the operator, in progress.
+
+Add a CI workflow and make the release workflow run the gate (spec section 5, "CI"). Bump the artifact actions to current majors.
+
+- [x] 1. Tests (red first) in `tests/test_packaging.py::TestCiWorkflow`: `ci.yml` exists, triggers on `push` and `pull_request`, runs
+  `sdlc_check.py` on a 3.11/3.12/3.13 matrix, builds and runs `twine check --strict`, has `contents: read`, references no token;
+  `publish.yml` runs `sdlc_check.py` before building and uses no `artifact@v4` action.
+- [x] 2. Add `.github/workflows/ci.yml`; add the gate step to `publish.yml`; bump `upload-artifact` to v7 and `download-artifact` to v8.
+- [x] 3. CHANGELOG entry; gate green.
+
+Risks and open questions:
+
+- Workflows cannot be run locally: the tests check structure, not behaviour. The first push shows whether they work.
+- `download-artifact@v8` with `upload-artifact@v7` is the current pair upstream; not exercised until the first run.
+
 ## Phase 3: Publish to PyPI
 
-Status: approved by the operator, not started.
+Status: built (items 1 to 8 done); publishing itself is operator-gated.
 
 Mirror the release pattern of `prism-local` (the `03-foundy-local` project): the kit becomes an installable Python package
 (`sdlc_kit/`) shipped as a wheel and an sdist, with Apache-2.0, Keep-a-Changelog, and GitHub Actions trusted publishing.

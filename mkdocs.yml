@@ -1,0 +1,20 @@
+site_name: sdlc-kit
+site_description: A small, harness-neutral AI-native SDLC you can drop into any git project
+site_url: https://senssei.github.io/sdlc-kit/
+repo_url: https://github.com/senssei/sdlc-kit
+edit_uri: edit/main/docs/
+strict: true
+
+theme:
+  name: readthedocs
+
+nav:
+  - Home: index.md
+  - Install: install.md
+  - Process: process.md
+  - Harnesses: harnesses.md
+  - The gate: gate.md
+  - Releasing: releasing.md
+
+markdown_extensions:
+  - admonition

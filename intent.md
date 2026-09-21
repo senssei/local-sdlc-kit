@@ -27,7 +27,8 @@ same kit is also installable from PyPI as `sdlc-kit`; both surfaces expose the s
 
 1. Running the agents. The kit only tells them what to do and checks the result.
 2. Enforcing the process on humans. Everything is opt-in.
-3. A plugin marketplace entry or a hosted service. PyPI is in scope; marketplaces are not.
+3. A plugin marketplace entry or a hosted service. PyPI is in scope, and so is a static MkDocs documentation site on GitHub Pages;
+   marketplaces and services are not.
 
 ## 5. Success criteria
 
