@@ -1,0 +1,16 @@
+# The kit's own gate (dogfood). Run: python3 sdlc_kit/sdlc_check.py
+base = "main"
+
+[[check]]
+name = "compile"
+run = "python3 -m compileall -q install.py sdlc_kit tests"
+
+[[check]]
+name = "tests"
+run = "python3 -m unittest discover -s tests"
+
+[red]
+run = "python3 -m unittest {id}"
+timeout = 60
+not_found = ["Ran 0 tests", "_FailedTest"]   # unittest reports a missing module, class or method as a _FailedTest
+ignore = ["^FAILED\\b", "^Ran \\d+ tests?", "^-{5,}", "^={5,}"]

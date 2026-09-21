@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sdlc-kit"
+description = "A small, harness-neutral AI-native SDLC (intent, spec, plan, test, code, review) you can drop into any git project"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "sdlc-kit maintainers" }]
+keywords = [
+    "sdlc",
+    "ai-coding",
+    "agents",
+    "intent-spec-plan",
+    "process",
+    "harness-neutral",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "github-copilot",
+    "cursor",
+    "minimax-code",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Process",
+    "Typing :: Typed",
+]
+dynamic = ["version"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["build>=1.0", "twine>=5.0"]
+
+[project.urls]
+Homepage = "https://github.com/senssei/sdlc-kit"
+Issues = "https://github.com/senssei/sdlc-kit/issues"
+Changelog = "https://github.com/senssei/sdlc-kit/blob/main/CHANGELOG.md"
+
+[project.scripts]
+sdlc-kit-install = "sdlc_kit.install:main"
+
+[tool.setuptools]
+packages = ["sdlc_kit"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { attr = "sdlc_kit.__version__" }
+
+[tool.setuptools.package-data]
+sdlc_kit = ["template/**/*"]

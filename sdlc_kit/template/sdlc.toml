@@ -1,0 +1,35 @@
+# Gate configuration for scripts/sdlc_check.py. Project-owned: edit freely.
+# Every command runs through the shell from the repository root; exit 0 means pass.
+
+base = "main"            # ref the diff is taken from (changelog check, review)
+
+[[check]]
+name = "tests"
+run = "echo 'TODO: put your test command here' && false"
+# skip_if_missing = "mkdocs"        # optional: SKIP instead of FAIL when this executable is not installed
+
+# More checks run in the order given, for example:
+# [[check]]
+# name = "lint"
+# run = "ruff check ."
+
+[changelog]                          # optional: remove the section to disable the check
+file = "CHANGELOG.md"
+runtime_paths = ["src/"]             # a change under these paths requires `file` to change too
+
+[red]                                # red-first: how to run exactly one test; {id} is replaced by the (shell-quoted) id
+run = "echo 'TODO: configure [red].run in sdlc.toml ({id})'; exit 127"   # 127 = command could not run, so never "red"
+timeout = 60
+# Do not put {id} inside quotes in `run`: it is already quoted. Test ids that start with "-" cannot be passed to --red.
+not_found = []                       # regexes; output matching one means "test not found", which is not red.
+                                     # Keep them narrow: a pattern that also matches a genuine failure message hides a red test.
+ignore = []                          # regexes for summary/decoration lines that must never be shown as the failure reason
+
+# Examples for [red] (delete what you do not need). Exit 126/127 and death by signal are never red.
+#   unittest:  run = "python3 -m unittest {id}"     not_found = ["Ran 0 tests", "_FailedTest"]
+#              ignore = ["^FAILED\\b", "^Ran \\d+ tests?", "^-{5,}", "^={5,}"]
+#   pytest:    run = "python3 -m pytest -x -q {id}" not_found = ["no tests ran", "^ERROR: (file or directory )?not found"]
+#              ignore = ["^FAILED\\b", "^\\d+ (failed|passed)", "^=+ "]
+#   go:        run = "go test ./... -run {id}"      not_found = ["no tests to run"]      # ids are regexes: use a name like TestFoo
+#   npm/jest:  run = "npx jest -t {id}"             not_found = ["No tests found"]
+#   cargo:     run = "cargo test {id}"              not_found = []   # "running 0 tests" is printed for every target without a match: do not use it
